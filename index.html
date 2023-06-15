@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="alphachain">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>demo</title>
+    <!-- <link rel="stylesheet" href="lib/bootstrap-3.3.7/bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/style/common.css" />
+    <link rel="stylesheet" href="css/style/menu.css" />
+    <link rel="stylesheet" href="css/index.css" /> -->
+
+    <script src="lib/jquery/jquery-3.2.1.min.js"></script>
+    <!-- <script src="lib/bootstrap-3.3.7/bootstrap.min.js"></script> -->
+    <script src="lib/i18n/jquery.json.min.js"></script>
+    <script src="lib/i18n/jquery.i18n.properties.js"></script>
+    <!-- <script src="js/index.js"></script> -->
+</head>
+
+<body>
+    <div>
+        <select name="" id="changeLang" onchange="changeLangFn()">
+            <option value="en_US">English</option>
+            <option value="zh_CN">中文</option>
+        </select>
+        <p data-lang="text"></p>
+        <span data-lang="title"></span>
+        <label data-lang="text1"></label>
+        <!-- <button onclick="switchLang()" >test</button> -->
+    </div>
+
+    <script>
+        var LANGUAGE_CODE = "en_US"; //标识语言
+
+        function loadProperties(type) {
+            jQuery.i18n.properties({
+                name: 'strings', // 资源文件名称
+                path: 'static/', // 资源文件所在目录路径
+                mode: 'map', // 模式：变量或 Map 
+                language: type, // 对应的语言
+                cache: false,
+                encoding: 'UTF-8',
+                callback: function () { // 回调方法    
+                    for (var i in $.i18n.map) {
+                        $('[data-lang="' + i + '"]').text($.i18n.map[i]);
+                    }
+                }
+            });
+        }
+
+        function changeLangFn() {
+            console.log($("#changeLang").val());
+            loadProperties($("#changeLang").val());
+        }
+        // function switchLang(lang) {
+        //     // LANGUAGE_CODE = LANGUAGE_CODE == 'zh_CN' ? 'en_US' : 'zh_CN';
+        //     loadProperties(lang);
+        // }
+
+        $(document).ready(function () {
+            LANGUAGE_CODE = jQuery.i18n.normaliseLanguageCode({}); //获取浏览器的语言     
+            LANGUAGE_CODE = LANGUAGE_CODE == 'zh_CN' ? 'zh_CN' : 'en_US';
+            loadProperties(LANGUAGE_CODE);
+        })
+    </script>
+</body>
+
+</html>
